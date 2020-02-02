@@ -1,6 +1,10 @@
-<h1>id:<%= @task.id %> のタスク詳細ページ</h1>
+<h1><%= @task.user.name %> id:<%= @task.id %> のタスク詳細ページ</h1>
 
 <table class="table table-bordered">
+  <tr>
+    <th>ユーザー</th>
+    <td><%= @task.user.name %></td>
+  </tr>
   <tr>
     <th>id</th>
     <td><%= @task.id %></td>
@@ -15,5 +19,7 @@
   </tr>
 </table>
 
-<%= link_to 'このタスクを編集する', edit_task_path(@task), class:'btn btn-light' %>
-<%= link_to 'このタスクを削除する', @task, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }, class: 'btn btn-danger' %>
+<% if current_user == @task.user %>
+  <%= link_to 'このタスクを編集する', edit_task_path(@task), class:'btn btn-light' %>
+  <%= link_to 'このタスクを削除する', @task, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }, class: 'btn btn-danger' %>
+<% end %>

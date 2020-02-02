@@ -1,27 +1,27 @@
-<h1>タスク一覧</h1>
-
-<% if @tasks.any? %>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>id</th>
-        <th>タスク</th>
-        <th>ステータス</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @tasks.each do |task| %>
-        <tr>
-          <td><%= link_to task.id, task %></td>
-          <td><%= task.content %></td>
-          <td><%= task.status %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <div>
-    <%= paginate @tasks %>
+  <div class="row">
+    <div class="col-sm-8">
+      <ul class="list-unstyled">
+        <% @tasks.each do |task| %>
+          <li class="media mb-3">
+            <img class="mr-2 rounded" src="<%= gravatar_url(task.user, { size: 50 }) %>" alt="">
+            <div class="media-body">
+            <div>
+              <P class="mb-0"><b><%= task.user.name %></b> <span class="text-muted">posted at <%= task.created_at %></span></P>
+            </div>
+              <div>
+                <p class="mb-0">ID【<%= link_to task.id, task %>】：タスク【<%= task.content %>】：ステータス【<%= task.status %>】</p>
+              </duv>
+              <div>
+                <% if current_user == task.user %>
+                  <%= link_to "このタスクを削除する", task, method: :delete, data: { confirm: "本当に削除してよろしいですか？" }, class: 'btn btn-danger btn-sm' %>
+                <% end %>
+              </div>
+            </div>
+          </li>
+        <% end %>
+        <%= paginate @tasks %>
+      </ul>
+    </div>
   </div>
-<% end %>
-
-<%= link_to '新規タスクの作成', new_task_path, class: "btn btn-primary" %>
+  
+  <%= link_to '新規タスクの作成', new_task_path, class: "btn btn-primary" %>
